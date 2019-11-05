@@ -10,12 +10,14 @@ namespace csharp
             this.Items = Items;
         }
 
+
+        //I divided the method into a several different methods for each individual item
+        //So its easier to read and understand the code 
         public void UpdateQuality()
         {
             for (var i = 0; i < Items.Count; i++)
-            {
-
-
+            {              
+                //Splitting the string because its not specified that all items will have exact same names
                 string[] name = Items[i].Name.Split(' ');
                 string firstTwoNameWords = name[0] + " " + name[1];
 
@@ -27,13 +29,24 @@ namespace csharp
                 {
                     BackstagePassesUpdate(i);
                 }
-
-
-
+                else if(name[0] == "Sulfuras,")
+                {
+                    //Since we dont have to do anything with Sulfuras I am specifying it just in case of laater updates
+                }
+                else if (name[0] == "Conjured")
+                {
+                    ConjuredUpdate(i);
+                }
+                else
+                {
+                    NonSpecifiedItemsUpdate(i, 1);
+                }
 
             }
         }
 
+
+        //Method that updates Aged Brie items
         private void AgedBrieUpdate(int i)
         {
             if(Items[i].Quality < 50)
@@ -57,6 +70,7 @@ namespace csharp
             Items[i].SellIn--;
         }
 
+        //Method that updates Backstage Passes items
         private void BackstagePassesUpdate(int i)
         {
             if (Items[i].SellIn > 0)
@@ -90,6 +104,50 @@ namespace csharp
 
             Items[i].SellIn--;
         }
+
+
+        //Because Conjured degrade basically the same as non specified items, just twice as fast,
+        //I will pass the multiplier value and use the same method
+        private void ConjuredUpdate(int i)
+        {           
+            int multiplier = 2;
+            NonSpecifiedItemsUpdate(i, multiplier);
+        }
+        
+        private void NonSpecifiedItemsUpdate(int i, int multiplier)
+        {
+            if (Items[i].SellIn > 0)
+            {
+                if (Items[i].Quality > 0)
+                {
+                    Items[i].Quality = Items[i].Quality - 1 * multiplier;
+                }
+
+                //This check here is required for Conjured Items
+                if (Items[i].Quality < 0)
+                {
+                    Items[i].Quality = 0;
+                }
+            }
+            else
+            {
+                if (Items[i].Quality > 0)
+                {
+                    Items[i].Quality = Items[i].Quality - 2 * multiplier;
+                }
+
+                if (Items[i].Quality < 0)
+                {
+                    Items[i].Quality = 0;
+                }
+            }
+
+            Items[i].SellIn--;
+        }
+
+
+
+
 
 
     } 

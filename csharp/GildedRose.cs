@@ -19,7 +19,12 @@ namespace csharp
             {              
                 //Splitting the string because its not specified that all items will have exact same names
                 string[] name = Items[i].Name.Split(' ');
-                string firstTwoNameWords = name[0] + " " + name[1];
+                string firstTwoNameWords = "";
+                if (name.Length > 1)
+                {
+                    firstTwoNameWords = name[0] + " " + name[1];
+
+                }
 
                 if (firstTwoNameWords == "Aged Brie")
                 {

@@ -36,7 +36,7 @@ namespace csharp
                 }
                 else if(name[0] == "Sulfuras,")
                 {
-                    //Since we dont have to do anything with Sulfuras I am specifying it just in case of laater updates
+                    SulfurasUpdate(i);
                 }
                 else if (name[0] == "Conjured")
                 {
@@ -48,6 +48,12 @@ namespace csharp
                 }
 
             }
+        }
+
+
+        private void SulfurasUpdate(int i)
+        {
+            Items[i].SellIn--;
         }
 
 
